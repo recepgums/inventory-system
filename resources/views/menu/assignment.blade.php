@@ -9,9 +9,11 @@
                             <div class="table-responsive m-t-40">
                                 <!--YENİ EKLE BUTONU-->
                                 <div class="table-responsive m-t-40">
-                                    <button type="button" class="btn btn-primary float-right " data-toggle="modal"
-                                            data-target="#exampleModalx">Yeni Paket Ekle
-                                    </button>
+                                    @if(auth()->user()->role_id <= 2)
+                                        <button type="button" class="btn btn-primary float-right " data-toggle="modal"
+                                                data-target="#exampleModalx">Yeni Paket Ekle
+                                        </button>
+                                    @endif
                                     <div class="modal fade" id="exampleModalx" tabindex="-1" role="dialog"
                                          aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
@@ -59,8 +61,7 @@
                                     <thead>
                                     <tr>
                                         <th colspan="2">Personel</th>
-                                        @if (auth()->user()->staff_id == 0)
-                                            <th>Yetkiler</th>@endif
+                                        <th>Yetkiler</th>
                                         <th>Tarihi</th>
                                         <th></th>
                                     </tr>
@@ -81,9 +82,12 @@
                                                 <td>
                                                     @csrf
                                                     @foreach($tasks as $key=>$task)
-                                                        <label> <input type='checkbox' name='task_id[]'
+                                                        <label>
+                                                            @if(auth()->user()->role_id<=2)
+                                                                <input type='checkbox' name='task_id[]'
                                                                        value='{{$task->id}}'
                                                                        @if(in_array($dizi2[$key], $dizi)) checked @endif>
+                                                            @endif
                                                             <small
                                                                 @if(in_array($dizi2[$key], $dizi)) style="color:green"
                                                                 @else style="color:red" @endif>{{$task->task_name}}
@@ -93,7 +97,9 @@
                                                 </td>
                                                 <td>{{$item->created_at->day}} {{date("F", strtotime($item->created_at))}} {{$item->created_at->year}} </td>
                                                 <td>
-                                                    <button class="btn btn-danger">Düzenle</button>
+                                                    @if(auth()->user()->role_id==1)
+                                                        <button class="btn btn-danger">Düzenle</button>
+                                                    @endif
                                                 </td>
                                             </form>
                                         </tr>

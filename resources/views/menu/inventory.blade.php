@@ -9,7 +9,9 @@
                             <div class="table-responsive m-t-40">
                                         <!--YENİ EKLE BUTONU-->
                                 <div class="table-responsive m-t-40">
-                                    <button type="button" class="btn btn-primary float-right " data-toggle="modal" data-target="#exampleModal2">Yeni Paket Ekle</button>
+                                    @if(auth()->user()->role_id <= 2)
+                                        <button type="button" class="btn btn-primary float-right " data-toggle="modal" data-target="#exampleModal2">Yeni Paket Ekle</button>
+                                    @endif
                                     <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -55,7 +57,11 @@
                                             <td><h6>{{$item->package_name}}</h6></td>
                                             <td>{{$item->package_count}}</td>
                                             <td>{{$item->storage_for_package}}</td>
-                                            <td><button class="btn btn-danger float-right " data-toggle="modal" data-target="#exampleModal{{$item->id}}">Düzenle</button></td>
+                                            <td>
+                                                @if(auth()->user()->role_id <= 2)
+                                                    <button class="btn btn-danger float-right " data-toggle="modal" data-target="#exampleModal{{$item->id}}">Düzenle</button>
+                                                @endif
+                                            </td>
                                         </tr>
                                         <div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">

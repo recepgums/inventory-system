@@ -86,17 +86,19 @@
                 <li>
                     <a href="{{route('show_staff')}}" class="waves-effect"><i class="fa fa-table m-r-10" aria-hidden="true"></i>Personeller</a>
                 </li>
-                @if(auth()->user()->staff_id==2)
+
                 <li>
                     <a href="{{route('show_inventory')}}" class="waves-effect"><i class="fa fa-clock-o m-r-10" aria-hidden="true"></i>Envanter</a>
                 </li>
+
+                @if(auth()->user()->role_id <= 2)
+                    <li>
+                        <a href="{{route('show_fault')}}" class="waves-effect"><i class="fa fa-user m-r-10" aria-hidden="true"></i>Arızalar</a>
+                    </li>
+                    <li>
+                        <a href="{{route('show_tasks')}}" class="waves-effect"><i class="fa fa-bank m-r-10" aria-hidden="true"></i>Yetkiler</a>
+                    </li>
                 @endif
-                <li>
-                    <a href="{{route('show_fault')}}" class="waves-effect"><i class="fa fa-user m-r-10" aria-hidden="true"></i>Arızalar</a>
-                </li>
-                <li>
-                    <a href="{{route('show_tasks')}}" class="waves-effect"><i class="fa fa-bank m-r-10" aria-hidden="true"></i>Yetkiler</a>
-                </li>
                 <li>
                     <a href="{{route('show_assignment_tasks')}}" class="waves-effect"><i class="fa fa-dashboard m-r-10" aria-hidden="true"></i>Yetki Ataması</a>
                 </li>

@@ -22,6 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/personeller', 'StaffController@show')->name('show_staff');
 Route::post('/personeller', 'StaffController@create')->name('create_staff');
+Route::post('/pozisyon_ekle', 'StaffController@create_position')->name('create_position');
 Route::post('/personeller/{id}', 'StaffController@edit')->name('edit_staff');
 
 

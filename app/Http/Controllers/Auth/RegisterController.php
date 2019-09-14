@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Staff;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -52,7 +53,6 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
             'staff_id' => ['required', 'integer'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
@@ -67,13 +67,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $new= new User();
-        $new->name=$data['name'];
-        $new->email=$data['email'];
-        $new->staff_id=$data['staff_id'];
-        $new->password=Hash::make($data['password']);
+        $id=$data['staff_id'];
+        $staff=Staff::find($id);
+        if ($staff->pin==$data['pin']){
+            $new= new User();
+            $new->name=$staff->staff_name;
+            $new->email=$data['email'];
+            $new->role_id=$staff->staff_rank;
+            $new->staff_id=$id;
+            $new->password=Hash::make($data['password']);
 
-        $new->save();
-        return $new;
+            $new->save();
+            return $new;
+        }
+
+        return redirect()->back();
+
     }
 }
