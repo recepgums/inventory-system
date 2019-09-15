@@ -29,12 +29,9 @@
                                                         @endforeach
                                                     </select><br><br>
                                                     <span class="col-sm-4">Kaydedicisi : </span>
-                                                    <select name="person_receiving_feedback" style="width: 50%;margin-left:30px;background-color: white ; border:1px solid black" class=" form-control">
-                                                        <option  value=""></option>
-                                                        @foreach($staff  as $item)
-                                                            <option  value="{{$item->id}}">{{$item->staff_name}}</option>
-                                                        @endforeach
-                                                    </select><br><br>
+                                                    <input name="person_receiving_feedback" value="{{\App\Staff::find(auth()->user()->staff_id)->id}}" type="hidden">
+                                                    <input value="{{\App\Staff::find(auth()->user()->staff_id)->staff_name }}" class="form-control col-sm-8" type="text" style="background-color: white ; border:1px solid black" class="lg-6" readonly><br><br>
+                                                    <br><br>
                                                     <span class="col-sm-6"> Türü :</span>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <select name="fault_type" style="width: 50%;margin-left:30px;background-color: white ; border:1px solid black" class=" form-control">
                                                         <option  value=""></option>
@@ -95,19 +92,16 @@
                                                         @csrf
                                                         <div class="modal-body " style="text-align: center">
                                                             <span class="col-sm-4">Sahibi : </span>&nbsp;&nbsp;&nbsp;
-                                                                <select name="made_by_that_staff" style="width: 50%;margin-left:30px;background-color: white ; border:1px solid black" class="form-control">
+                                                            <select name="made_by_that_staff" style="width: 50%;margin-left:30px;background-color: white ; border:1px solid black" class="form-control">
                                                                 <option  value="{{$item->staff->id}}">{{$item->staff->staff_name}}</option>
                                                                 @foreach($staff  as $item2)
                                                                     <option  value="{{$item2->id}}">{{$item2->staff_name}}</option>
                                                                 @endforeach
                                                             </select><br><br>
                                                             <span class="col-sm-4">Kaydedicisi : </span>
-                                                            <select name="person_receiving_feedback" style="width: 50%;margin-left:30px;background-color: white ; border:1px solid black" class=" form-control">
-                                                                <option  value="{{$item->fault_receiving_by->id}}">{{$item->fault_receiving_by->staff_name}}</option>
-                                                                @foreach($staff  as $item2)
-                                                                    <option  value="{{$item2->id}}">{{$item2->staff_name}}</option>
-                                                                @endforeach
-                                                            </select><br><br>
+                                                            <input  style="background-color: white ; border:1px solid black" class="lg-6" value="{{\App\Staff::find($item->person_receiving_feedback)->staff_name }}" type="text" readonly>
+                                                            <input name="person_receiving_feedback" value="{{\App\Staff::find($item->person_receiving_feedback)->id }}"type="hidden">
+                                                            <br><br>
 
                                                             <span class="col-sm-6"> Türü :</span>&nbsp;&nbsp;&nbsp;&nbsp;
                                                             <select name="fault_type" style="width: 50%;margin-left:30px;background-color: white ; border:1px solid black" class=" form-control">

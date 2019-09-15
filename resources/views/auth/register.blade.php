@@ -110,8 +110,8 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+                @if(DB::table("staff")->select('*')->whereNotIn('staff_name',function($query) {$query->select('name')->from('users');})->get()->count())
                 <div class="card-header">{{ __('Kayıt Ol') }}</div>
-
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
@@ -120,7 +120,7 @@
 
                             <div class="col-md-6">
                                 <select name="staff_id"  class="form-control">
-                                    @foreach(\App\Staff::all() as $staff)
+                                    @foreach(DB::table("staff")->select('*')->whereNotIn('staff_name',function($query) {$query->select('name')->from('users');})->get() as $staff)
                                         <option value="{{$staff->id}}">{{$staff->staff_name}}</option>
                                     @endforeach
                                 </select>
@@ -187,6 +187,12 @@
                     </form>
                 </div>
             </div>
+            @else
+                <div class="alert alert-danger" role="alert">
+                    Kayıt yapılacak yeni personel bulunmamaktadır. Lütfen yönecitici ile görüşün.
+                </div>
+
+            @endif
         </div>
     </div>
 </div>

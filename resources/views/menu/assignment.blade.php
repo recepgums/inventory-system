@@ -78,31 +78,52 @@
                                             <td style="width:50px;"><span
                                                     class="round">{{substr($item->staff_name,0,1)}}</span></td>
                                             <td><h6>{{$item->staff_name}}</h6></td>
-                                            <form action="{{route('edit_assignment', $item->id)}}" method="post">
-                                                <td>
-                                                    @csrf
-                                                    @foreach($tasks as $key=>$task)
-                                                        <label>
-                                                            @if(auth()->user()->role_id<=2)
-                                                                <input type='checkbox' name='task_id[]'
-                                                                       value='{{$task->id}}'
-                                                                       @if(in_array($dizi2[$key], $dizi)) checked @endif>
-                                                            @endif
-                                                            <small
-                                                                @if(in_array($dizi2[$key], $dizi)) style="color:green"
-                                                                @else style="color:red" @endif>{{$task->task_name}}
-                                                            </small>
-                                                        </label><br>
-                                                    @endforeach
-                                                </td>
-                                                <td>{{$item->created_at->day}} {{date("F", strtotime($item->created_at))}} {{$item->created_at->year}} </td>
-                                                <td>
-                                                    @if(auth()->user()->role_id==1)
-                                                        <button class="btn btn-danger">Düzenle</button>
-                                                    @endif
-                                                </td>
-                                            </form>
+                                            <td>Something</td>
+                                            <td>{{$item->created_at->day}} {{date("F", strtotime($item->created_at))}} {{$item->created_at->year}} </td>
+                                            <td>
+                                                @if(auth()->user()->role_id==1)
+                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal{{$item->id}}">Düzenle</button>
+                                                @endif
+                                            </td>
                                         </tr>
+                                        <div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <form action="{{route('edit_assignment', $item->id)}}" method="post">
+                                                    <div class="modal-body">
+                                                        <div style="text-align: center">
+                                                            <h2><b>{{$item->staff_name}}</b></h2><br>
+
+                                                                    @csrf
+                                                                    @foreach($tasks as $key=>$task)
+                                                                        <label>
+                                                                            @if(auth()->user()->role_id<=2)
+                                                                                <input type='checkbox' name='task_id[]'
+                                                                                       value='{{$task->id}}'
+                                                                                       @if(in_array($dizi2[$key], $dizi)) checked @endif>
+                                                                            @endif
+                                                                            <small
+                                                                                @if(in_array($dizi2[$key], $dizi)) style="color:green"
+                                                                                @else style="color:red" @endif>{{$task->task_name}}
+                                                                            </small>
+                                                                        </label><br>
+                                                                    @endforeach
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-danger">Düzenle</button>
+                                                    </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     @endforeach
                                     </tbody>
                                 </table>
@@ -114,3 +135,4 @@
         </div>
     </div>
 @endsection
+
