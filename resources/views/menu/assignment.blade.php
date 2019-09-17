@@ -25,6 +25,7 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
+
                                                 <form action="{{route('create_assignment_tasks')}}" method="POST">
                                                     @csrf
                                                     <div class="modal-body " style="text-align: center">
@@ -55,7 +56,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--YENİ EKLE BUTONU SONU-->
 
                                 <table class="table stylish-table">
                                     <thead>
@@ -82,7 +82,7 @@
                                             <td>{{$item->created_at->day}} {{date("F", strtotime($item->created_at))}} {{$item->created_at->year}} </td>
                                             <td>
                                                 @if(auth()->user()->role_id==1)
-                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal{{$item->id}}">Düzenle</button>
+                                                    <button type="button"  id="ajaxSubmit" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal{{$item->id}}">Düzenle</button>
                                                 @endif
                                             </td>
                                         </tr>
@@ -99,22 +99,20 @@
                                                     <div class="modal-body">
                                                         <div style="text-align: center">
                                                             <h2><b>{{$item->staff_name}}</b></h2><br>
-
-                                                                    @csrf
-                                                                    @foreach($tasks as $key=>$task)
-                                                                        <label>
-                                                                            @if(auth()->user()->role_id<=2)
-                                                                                <input type='checkbox' name='task_id[]'
-                                                                                       value='{{$task->id}}'
-                                                                                       @if(in_array($dizi2[$key], $dizi)) checked @endif>
-                                                                            @endif
-                                                                            <small
-                                                                                @if(in_array($dizi2[$key], $dizi)) style="color:green"
-                                                                                @else style="color:red" @endif>{{$task->task_name}}
-                                                                            </small>
-                                                                        </label><br>
-                                                                    @endforeach
-
+                                                            @csrf
+                                                            @foreach($tasks as $key=>$task)
+                                                                <label>
+                                                                    @if(auth()->user()->role_id<=2)
+                                                                        <input type='checkbox' name='task_id[]'
+                                                                               value='{{$task->id}}'
+                                                                               @if(in_array($dizi2[$key], $dizi)) checked @endif>
+                                                                    @endif
+                                                                    <small
+                                                                        @if(in_array($dizi2[$key], $dizi)) style="color:green"
+                                                                        @else style="color:red" @endif>{{$task->task_name}}
+                                                                    </small>
+                                                                </label><br>
+                                                            @endforeach
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">

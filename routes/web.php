@@ -51,14 +51,4 @@ Route::post('/gorevler/{id}', 'TasksController@edit')->name('edit_tasks');
 Route::get('/yetki_atamasi', 'AssignmentTasksController@show')->name('show_assignment_tasks');
 Route::post('/yetki_atamasi', 'AssignmentTasksController@create')->name('create_assignment_tasks');
 Route::post('/yetki_atamasi/{id}', 'AssignmentTasksController@edit')->name('edit_assignment');
-
-
-
-
-
-
-
-
-
-
-
+Route::get('/yetki_atamasi_ajax/{id}', 'AssignmentTasksController@ajax')->name('ajax_show_assignment');

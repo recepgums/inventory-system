@@ -35,7 +35,12 @@
                                                         <span class="col-sm-3">Aylık Maaşı</span>
                                                         <input name="staff_salary" class="form-control col-sm-9 lg-6" type="text" style="background-color: white ; border:1px solid black"><br><br>
                                                         <span class="col-sm-3">Yetkileri&emsp; </span>
-                                                        <input name="staff_rank" class="form-control col-sm-9 lg-6" type="text" style="background-color: white ; border:1px solid black"><br><br>
+                                                        <select name="staff_rank" style="width: 100%;background-color: white ; border:1px solid black" class="col-sm-9 form-control ">
+                                                            <option >---Yetki Seçin---</option>
+                                                            @foreach($rank  as $item2)
+                                                                <option  value="{{$item2->id}}">{{$item2->name}}</option>
+                                                            @endforeach
+                                                        </select><br><br>
                                                         <span class="col-sm-3">PIN Kodu&emsp;</span>
                                                         <input name="pin" class="form-control col-sm-9 lg-6" type="text" style="background-color: white ; border:1px solid black"><br><br>
                                                     </div>
@@ -75,18 +80,19 @@
                                     <thead>
                                     <tr>
                                         <th colspan="2">Pozisyon</th>
-                                        <th>Yetkiler</th>
+
                                         <th>Maaş</th>
                                         <th>Başlangıç</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+
                                     @foreach($staff as $item)
-                                        <tr>
+                                        <tr >
                                             <td style="width:50px;"><span class="round">{{substr($item->staff_name,0,1)}}</span></td>
                                             <td>
                                                 <h6>{{$item->staff_name}}</h6><small class="text-muted">{{$item->position->position_name}}</small></td>
-                                            <td>{{$item->staff_rank}}</td>
+
                                             <td>{{$item->staff_salary}} &#8378;</td>
                                             <td>{{$item->created_at->day}} {{date("F", strtotime($item->created_at))}} {{$item->created_at->year}} </td>
                                             <td>
@@ -119,8 +125,16 @@
                                                             </select>
                                                             <span class="col-sm-3">Aylık Maaşı</span>
                                                             <input name="staff_salary" class="form-control col-sm-9" value="{{$item->staff_salary}}" type="text" style="background-color: white ; border:1px solid black" class="lg-6"><br><br>
-                                                            <span class="col-sm-3">Yetkileri</span>
-                                                            <input name="staff_rank" class="form-control col-sm-9" value="{{$item->staff_rank}}" type="text" style="background-color: white ; border:1px solid black" class="lg-6"><br><br>
+                                                            @if(auth()->user()->role<=1)
+                                                                <span class="col-sm-3">Yetkileri</span>
+                                                                <select name="staff_rank" style="width: 100%;background-color: white ; border:1px solid black" class="col-sm-9 form-control ">
+                                                                    <option >---Yetki Seçin---</option>
+                                                                    @foreach($rank  as $item2)
+                                                                        <option  value="{{$item2->id}}">{{$item2->name}}</option>
+                                                                    @endforeach
+                                                                </select><br><br>
+
+                                                            @endif
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="submit" class="btn btn-danger">Düzenle</button>

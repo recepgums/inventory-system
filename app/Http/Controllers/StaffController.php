@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Positions;
+use App\Roles;
 use App\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,10 +17,13 @@ class StaffController extends Controller
             'pin' => ['required', 'integer', 'min:4']
         ]);
     }
+
     public function show()
     {
         $position = Positions::all();
         $staff = Staff::all();
+        $rank = Roles::all();
+        View::share('rank', $rank);
         View::share('position', $position);
         View::share('staff', $staff);
         return view('menu.staff');
@@ -32,6 +36,7 @@ class StaffController extends Controller
         $staff->position_of_staff = $request->position_of_staff;
         $staff->staff_salary = $request->staff_salary;
         $staff->staff_rank = $request->staff_rank;
+
         $staff->pin = $request->pin;
 
         $staff->save();
@@ -45,8 +50,11 @@ class StaffController extends Controller
         $staff->position_of_staff = $request->position_of_staff;
         $staff->staff_salary = $request->staff_salary;
         $staff->staff_rank = $request->staff_rank;
-        $staff->pin = $request->pin;
-
+        if ($request->has('pin')) {
+            $staff->pin = $request->pin;
+        } else {
+            $staff->pin = 0;
+        }
         $staff->save();
         return redirect()->route('show_staff');
     }
@@ -54,9 +62,10 @@ class StaffController extends Controller
     public function create_position(Request $request)
     {
         $position = new Positions();
-        $position->position_name=$request->position_name;
+        $position->position_name = $request->position_name;
 
         $position->save();
         return redirect()->route('show_staff');
     }
+
 }

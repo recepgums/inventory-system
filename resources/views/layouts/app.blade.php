@@ -38,13 +38,13 @@
             </div>
             <div class="navbar-collapse">
                 <ul class="navbar-nav mr-auto mt-md-0 ">
-                    <!-- This is  -->@if(Auth::user())
-                    <li class="nav-item hidden-sm-down">
-                        <form class="app-search p-l-20">
-                            <input type="text" class="form-control" placeholder="Search for..."> <a class="srh-btn"><i class="ti-search"></i></a>
-                        </form>
-                    </li>
-                                         @endif
+                    <!-- This is  -->
+                    @if(Auth::user())
+                        <li class="nav-item hidden-sm-down">
+                            @yield('search')
+
+                        </li>
+                    @endif
                 </ul>
                 @guest
                     <li class="nav-item">
@@ -95,6 +95,7 @@
                     <li>
                         <a href="{{route('show_fault')}}" class="waves-effect"><i class="fa fa-user m-r-10" aria-hidden="true"></i>Arızalar</a>
                     </li>
+                    <li>
                     <li>
                         <a href="{{route('show_tasks')}}" class="waves-effect"><i class="fa fa-bank m-r-10" aria-hidden="true"></i>Yetkiler</a>
                     </li>
